@@ -35,6 +35,6 @@ public:
 
             stack.push_back(node);
         }
-        return stack.empty() ? NULL : stack[0];
+        return stack[0];
     }
 };
