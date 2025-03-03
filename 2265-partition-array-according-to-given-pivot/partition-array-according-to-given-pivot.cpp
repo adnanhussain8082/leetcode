@@ -27,29 +27,51 @@
 // };
 
 
+// class Solution {
+// public:
+//     vector<int> pivotArray(vector<int>& nums, int pivot) {
+//         vector<int> result(nums.size(), 0);
+//         int left = 0, right = nums.size() - 1;
+        
+//         for (int i = 0, j = nums.size() - 1; i < nums.size(); ++i, --j) {
+//             if (nums[i] < pivot) {
+//                 result[left] = nums[i];
+//                 left++;
+//             }
+            
+//             if (nums[j] > pivot) {
+//                 result[right] = nums[j];
+//                 right--;
+//             }
+//         }
+        
+//         while (left <= right) {
+//             result[left] = pivot;
+//             left++;
+//         }
+        
+//         return result;
+//     }
+// };
+
+
 class Solution {
 public:
     vector<int> pivotArray(vector<int>& nums, int pivot) {
-        vector<int> result(nums.size(), 0);
-        int left = 0, right = nums.size() - 1;
+        vector<int> result;
         
-        for (int i = 0, j = nums.size() - 1; i < nums.size(); ++i, --j) {
-            if (nums[i] < pivot) {
-                result[left] = nums[i];
-                left++;
-            }
-            
-            if (nums[j] > pivot) {
-                result[right] = nums[j];
-                right--;
-            }
-        }
+        // Pass 1: Add elements < pivot
+        for (int num : nums)
+            if (num < pivot) result.push_back(num);
         
-        while (left <= right) {
-            result[left] = pivot;
-            left++;
-        }
+        // Pass 2: Add elements == pivot
+        for (int num : nums)
+            if (num == pivot) result.push_back(num);
         
+        // Pass 3: Add elements > pivot
+        for (int num : nums)
+            if (num > pivot) result.push_back(num);
+
         return result;
     }
 };
