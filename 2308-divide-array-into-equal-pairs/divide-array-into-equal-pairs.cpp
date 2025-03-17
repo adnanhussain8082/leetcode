@@ -16,6 +16,23 @@ private:
 
         return pairs == n/2;
     }
+
+    bool approach2(vector<int>& nums){
+        int n=nums.size();
+
+        sort(nums.begin(),nums.end());
+
+        int i=1;
+        for(;i<n;){
+            if(nums[i]==nums[i-1]){
+                i+=2;
+            }
+            else{
+                return false;
+            }
+        }
+        return true;
+    }
 public:
     // General Rule of Thumb:
     // If N ≤ 10⁵, sorting (O(N log N)) is manageable.
@@ -24,7 +41,10 @@ public:
     bool divideArray(vector<int>& nums) {
 
         //approach 1:
-        return approach1(nums);
-        
+        // return approach1(nums);
+
+        //approach 2:
+        return approach2(nums);
+
     }
 };
