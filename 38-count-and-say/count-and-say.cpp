@@ -1,26 +1,20 @@
 class Solution {
 public:
     string countAndSay(int n) {
-        if (n == 1) return "1";
-        
+        if (n == 0) return "";
         string res = "1";
-        
-        for (int step = 2; step <= n; ++step) {
-            string next = "";
-            int len = res.length();
-            
-            for (int i = 0; i < len;) {
+        while (--n) {
+            string cur = "";
+            for (int i = 0; i < res.size(); i++) {
                 int count = 1;
-                while (i + count < len && res[i] == res[i + count]) {
-                    ++count;
+                while ((i + 1 < res.size()) && (res[i] == res[i + 1])){
+                    count++;    
+                    i++;
                 }
-                next += to_string(count) + res[i];
-                i += count;
+                cur += to_string(count) + res[i];
             }
-            
-            res = next;
+            res = cur;
         }
-        
         return res;
     }
 };
