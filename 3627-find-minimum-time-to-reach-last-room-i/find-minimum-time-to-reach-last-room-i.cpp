@@ -7,7 +7,6 @@ public:
         priority_queue<vector<int> , vector<vector<int>> , greater<vector<int>>> minHeap;
 
         minHeap.push({0 , 0 , 0});
-        moveTime[0][0]=0;
 
         vector<vector<int>> dir = {{0,1},{-1,0},{0,-1},{1,0}};
         while(!minHeap.empty()){
@@ -27,9 +26,11 @@ public:
                 int nrow = i + it[0];
                 int ncol = j + it[1];
 
-                if(nrow >=0 && nrow<n && ncol>=0 && ncol<m && time[nrow][ncol]==INT_MAX){
+                if(nrow >=0 && nrow<n && ncol>=0 && ncol<m){
                     int nextTime = max(currTime , moveTime[nrow][ncol]) + 1;
-                    minHeap.push({nextTime , nrow , ncol});
+                    if(nextTime < time[nrow][ncol]){
+                        minHeap.push({nextTime , nrow , ncol});
+                    }
                 }
             }
         }
