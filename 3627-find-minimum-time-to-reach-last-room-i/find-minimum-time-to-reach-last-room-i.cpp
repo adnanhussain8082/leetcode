@@ -34,6 +34,6 @@ public:
                 }
             }
         }
-        return time[n-1][m-1];
+        return -1; //unreachable
     }
 };
