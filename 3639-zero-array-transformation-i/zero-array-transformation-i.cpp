@@ -8,7 +8,7 @@ public:
         for(auto& it : queries){
             diffArr[it[0]] += 1;
 
-            if(it[1]+1 < n) diffArr[it[1]+1] += -1;
+            if(it[1]+1 < n) diffArr[it[1]+1] -= 1;
         }
 
         for(int i=1;i<n;i++){
