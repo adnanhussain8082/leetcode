@@ -1,41 +1,35 @@
 class Solution {
-public:        //TC=O(E) E--->no of edges
+public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-        vector<pair<int,int>> Adj[n];
-        for(auto it : flights){
-            Adj[it[0]].push_back({it[1],it[2]});
+        vector<pair<int,int>> adj[n];
+        for(auto& it : flights){
+            adj[it[0]].push_back({it[1],it[2]});
         }
 
-        queue<pair<int,pair<int,int>>> q;  //{stops,{node,cost}}
+        queue<pair<int,pair<int,int>>> q;
+        q.push({0,{src , 0}});
+
         vector<int> cost(n,1e9);
-        q.push({0,{src,0}});
         cost[src]=0;
 
         while(!q.empty()){
-            auto it=q.front();
+            int node = q.front().second.first;
+            int costt = q.front().second.second;
+            int stop = q.front().first;
             q.pop();
-            int stops=it.first;
-            int node=it.second.first;
-            int costt=it.second.second;
 
-            //if stops>k
-            if(stops>k) continue;
+            if(stop>k) continue;
 
-            for(auto it : Adj[node]){
-                int adjNode=it.first;
-                int edgeWt=it.second;
-
-                if(costt+edgeWt < cost[adjNode]){
-                    cost[adjNode]=costt+edgeWt;
-                    q.push({stops+1,{adjNode,cost[adjNode]}});
+            for(auto [ne,wt] : adj[node]){
+                if(costt+wt <= cost[ne]){
+                    cost[ne] = costt+wt;
+                    q.push({stop+1 , {ne , cost[ne]}});
                 }
             }
         }
 
-        if(cost[dst]!=1e9){
-            return cost[dst];
-        }
+        if(cost[dst]!=1e9) return cost[dst];
 
-        return -1;
+        return -1; 
     }
 };
