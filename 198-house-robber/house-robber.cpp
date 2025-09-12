@@ -84,8 +84,7 @@ class Solution { //space optimization
         
         
         for(int i=1;i<n;i++){
-            int pick = arr[i];
-            if(i>1) pick += prev2;
+            int pick = arr[i] + prev2;
             int not_pick = prev;
             
             int curr_i = max(pick , not_pick);
