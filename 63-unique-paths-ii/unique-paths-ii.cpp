@@ -57,19 +57,60 @@
 
 
 
-class Solution {  //tabulation
+// class Solution {  //tabulation
+// public:
+//     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+//         int m=obstacleGrid.size();
+//         int n=obstacleGrid[0].size();
+
+//         vector<vector<int>> dp(m , vector<int>(n,0));
+
+//         for(int row=0;row<m;row++){
+//             for(int col=0;col<n;col++){
+//                 //base case
+//                 if(row==0 and col==0 and obstacleGrid[row][col]==0){
+//                     dp[row][col]=1;
+//                     continue;
+//                 }
+
+//                 if(obstacleGrid[row][col]!=1){ //no obstacle at the cell
+
+//                     int right=0;
+//                     int down=0;
+
+//                     if(row>0){
+//                         down = dp[row-1][col];
+//                     }
+
+//                     if(col>0){
+//                         right = dp[row][col-1];
+//                     }
+
+//                     dp[row][col] = right+down;
+//                 }
+//             }
+//         }
+
+//         return dp[m-1][n-1];
+//     }
+// };
+
+
+
+class Solution {  //space optimization
 public:
     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
         int m=obstacleGrid.size();
         int n=obstacleGrid[0].size();
 
-        vector<vector<int>> dp(m , vector<int>(n,0));
+        vector<int> prev(n,0);
 
         for(int row=0;row<m;row++){
+            vector<int> temp(n,0);
             for(int col=0;col<n;col++){
                 //base case
                 if(row==0 and col==0 and obstacleGrid[row][col]==0){
-                    dp[row][col]=1;
+                    temp[col]=1;
                     continue;
                 }
 
@@ -79,18 +120,20 @@ public:
                     int down=0;
 
                     if(row>0){
-                        down = dp[row-1][col];
+                        down = prev[col];
                     }
 
                     if(col>0){
-                        right = dp[row][col-1];
+                        right = temp[col-1];
                     }
 
-                    dp[row][col] = right+down;
+                    temp[col] = right+down;
                 }
             }
+
+            prev=temp;
         }
 
-        return dp[m-1][n-1];
+        return prev[n-1];
     }
 };
