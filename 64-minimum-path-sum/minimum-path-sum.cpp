@@ -58,18 +58,55 @@
 
 
 
-class Solution { //tabulation
+// class Solution { //tabulation
+// public:
+//     int minPathSum(vector<vector<int>>& grid) {
+//         int m=grid.size();
+//         int n=grid[0].size();
+
+//         vector<vector<int>> dp(m , vector<int>(n,0));
+
+//         for(int row=0;row<m;row++){
+//             for(int col=0;col<n;col++){
+//                 if(row==0 and col==0){
+//                     dp[0][0] = grid[0][0];
+//                     continue;
+//                 }
+
+//                 int right=1e9;
+//                 int down=1e9;
+
+//                 if(row>0){
+//                     down = grid[row][col] + dp[row-1][col];
+//                 }
+
+//                 if(col>0){
+//                     right = grid[row][col] + dp[row][col-1];
+//                 }
+
+//                 dp[row][col] = min(right , down);
+//             }
+//         }
+
+//         return dp[m-1][n-1];
+//     }
+// };
+
+
+
+class Solution { //space optimization
 public:
     int minPathSum(vector<vector<int>>& grid) {
         int m=grid.size();
         int n=grid[0].size();
 
-        vector<vector<int>> dp(m , vector<int>(n,0));
+        vector<int> prev(n,0);
 
         for(int row=0;row<m;row++){
+            vector<int> temp(n,0);
             for(int col=0;col<n;col++){
                 if(row==0 and col==0){
-                    dp[0][0] = grid[0][0];
+                    temp[0] = grid[0][0];
                     continue;
                 }
 
@@ -77,17 +114,19 @@ public:
                 int down=1e9;
 
                 if(row>0){
-                    down = grid[row][col] + dp[row-1][col];
+                    down = grid[row][col] + prev[col];
                 }
 
                 if(col>0){
-                    right = grid[row][col] + dp[row][col-1];
+                    right = grid[row][col] + temp[col-1];
                 }
 
-                dp[row][col] = min(right , down);
+                temp[col] = min(right , down);
             }
+
+            prev=temp;
         }
 
-        return dp[m-1][n-1];
+        return prev[n-1];
     }
 };
