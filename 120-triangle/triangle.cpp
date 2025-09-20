@@ -51,28 +51,61 @@
 
 
 
-class Solution {    //tabulation
+// class Solution {    //tabulation
+
+// public:
+//     int minimumTotal(vector<vector<int>>& triangle) {
+//         int m=triangle.size();
+//         int n=triangle[0].size();
+//         vector<vector<int>> dp(m,vector<int>(m,-1));
+
+//         //base case
+//         for(int i=0;i<triangle[m-1].size();i++){
+//             dp[m-1][i] = triangle[m-1][i];
+//         }
+
+//         for(int i=m-2;i>=0;i--){
+//             for(int j=0;j<triangle[i].size();j++){
+
+//                 int up = triangle[i][j] + dp[i+1][j];
+//                 int diagonal = triangle[i][j] + dp[i+1][j+1];
+
+//                 dp[i][j] = min(up,diagonal);
+//             }
+//         }
+//         return dp[0][0];
+//     }
+// };
+
+
+
+
+
+
+class Solution {    //space optimization
 
 public:
     int minimumTotal(vector<vector<int>>& triangle) {
         int m=triangle.size();
         int n=triangle[0].size();
-        vector<vector<int>> dp(m,vector<int>(m,-1));
+        vector<int> next(m,0);
 
         //base case
         for(int i=0;i<triangle[m-1].size();i++){
-            dp[m-1][i] = triangle[m-1][i];
+            next[i] = triangle[m-1][i];
         }
 
         for(int i=m-2;i>=0;i--){
+            vector<int> temp(m,0);
             for(int j=0;j<triangle[i].size();j++){
 
-                int up = triangle[i][j] + dp[i+1][j];
-                int diagonal = triangle[i][j] + dp[i+1][j+1];
+                int up = triangle[i][j] + next[j];
+                int diagonal = triangle[i][j] + next[j+1];
 
-                dp[i][j] = min(up,diagonal);
+                temp[j] = min(up,diagonal);
             }
+            next = temp;
         }
-        return dp[0][0];
+        return next[0];
     }
 };
