@@ -74,51 +74,119 @@
 
 
 
+// class Solution {    //tabulation
+// public:
+//     int minFallingPathSum(vector<vector<int>>& matrix) {
+//         int m=matrix.size();
+//         int ans=1e9;
+
+//         vector<vector<int>> dp(m , vector<int>(m,0));
+
+//         for(int i=0;i<m;i++){
+//             dp[m-1][i] = matrix[m-1][i];
+//         }
+
+//         for(int row=m-2;row>=0;row--){
+//             for(int col=0;col<=m-1;col++){
+
+//                 int leftDiag=1e9 , rightDiag=1e9;
+
+//                 if(col-1>=0){
+//                     leftDiag = matrix[row][col] + dp[row+1][col-1];
+//                 }
+//                 if(col+1<=m-1){
+//                     rightDiag = matrix[row][col] + dp[row+1][col+1];
+//                 }
+//                 int down = matrix[row][col] + dp[row+1][col]; //no need to check for this case, it will always be inside bounds
+
+//                 dp[row][col] = min({leftDiag,down,rightDiag});
+//             }
+//         }
+
+//         for(int i=0;i<m;i++){
+//             ans = min(ans , dp[0][i]);
+//         }
+//         return ans;
+//     }
+// };
+
+
+
+
+// class Solution {    //tabulation
+// public:
+//     int minFallingPathSum(vector<vector<int>>& matrix) {
+//         int m=matrix.size();
+//         int ans=1e9;
+
+//         vector<vector<int>> dp(m , vector<int>(m,0));
+
+//         for(int i=0;i<m;i++){
+//             dp[m-1][i] = matrix[m-1][i];
+//         }
+
+//         for(int row=m-2;row>=0;row--){
+//             for(int col=0;col<=m-1;col++){
+
+//                 int leftDiag=1e9 , rightDiag=1e9;
+
+//                 if(col-1>=0){
+//                     leftDiag = matrix[row][col] + dp[row+1][col-1];
+//                 }
+//                 if(col+1<=m-1){
+//                     rightDiag = matrix[row][col] + dp[row+1][col+1];
+//                 }
+//                 int down = matrix[row][col] + dp[row+1][col]; //no need to check for this case, it will always be inside bounds
+
+//                 dp[row][col] = min({leftDiag,down,rightDiag});
+//             }
+//         }
+
+//         for(int i=0;i<m;i++){
+//             ans = min(ans , dp[0][i]);
+//         }
+//         return ans;
+//     }
+// };
+
+
+
+
 class Solution {    //tabulation
 public:
     int minFallingPathSum(vector<vector<int>>& matrix) {
         int m=matrix.size();
         int ans=1e9;
 
-        vector<vector<int>> dp(m , vector<int>(m,0));
-        vector<int> answers(m,0);
+        vector<int> next(m,0);
 
         for(int i=0;i<m;i++){
-            dp[m-1][i] = matrix[m-1][i];
+            next[i] = matrix[m-1][i];
         }
 
-        for(int k=0;k<m;k++){
-            int start=dp[m-1][k];
+        for(int row=m-2;row>=0;row--){
+            vector<int> temp(m,0);
+            for(int col=0;col<=m-1;col++){
 
-            for(int row=m-2;row>=0;row--){
-                for(int col=0;col<=m-1;col++){
+                int leftDiag=1e9 , rightDiag=1e9;
 
-                    int leftDiag=1e9 , rightDiag=1e9;
-
-                    if(col-1>=0){
-                        leftDiag = matrix[row][col] + dp[row+1][col-1];
-                    }
-                    if(col+1<=m-1){
-                        rightDiag = matrix[row][col] + dp[row+1][col+1];
-                    }
-                    int down = matrix[row][col] + dp[row+1][col]; //no need to check for this case, it will always be inside bounds
-
-                    dp[row][col] = min({leftDiag,down,rightDiag});
+                if(col-1>=0){
+                    leftDiag = matrix[row][col] + next[col-1];
                 }
+                if(col+1<=m-1){
+                    rightDiag = matrix[row][col] + next[col+1];
+                }
+                int down = matrix[row][col] + next[col]; //no need to check for this case, it will always be inside bounds
+
+                temp[col] = min({leftDiag,down,rightDiag});
             }
-
-            int anss=1e9;
-            for(int i=0;i<m;i++){
-                anss = min(anss , dp[0][i]);
-            }
-
-            answers[k]=anss;
-
+            next=temp;
         }
 
         for(int i=0;i<m;i++){
-            ans = min(ans , answers[i]);
+            ans = min(ans , next[i]);
         }
         return ans;
     }
 };
+
