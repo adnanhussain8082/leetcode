@@ -27,12 +27,28 @@ private:
         }
         return cur;
     }
+
+    //2nd method using slow and fast pointer
+    ListNode* f2(ListNode* head){
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while(fast!=NULL and fast->next!=NULL){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        return slow;
+    }
 public:
     ListNode* middleNode(ListNode* head) {
         if(head->next==NULL) return head; //only one node
 
         //two methods
-        return f1(head);
+
+        // return f1(head);
+
+        return f2(head);
 
         
     }
