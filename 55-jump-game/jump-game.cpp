@@ -4,7 +4,9 @@ public:
         int n=nums.size();
         int maxIndex=0;
         for(int i=0;i<n;i++){
-            if(i>maxIndex) return false;
+            //we just have to reach the end, no min cost condition is there
+
+            if(i>maxIndex) return false; //if maxIndex lands on some index where nums[i]==0
 
             maxIndex=max(maxIndex , i+nums[i]);
 
