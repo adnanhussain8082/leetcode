@@ -1,8 +1,8 @@
 class Solution {
 public:
     int findContentChildren(vector<int>& g, vector<int>& s) {
-        sort(begin(g),end(g));
-        sort(begin(s),end(s));
+        sort(g.begin(),g.end());
+        sort(s.begin(),s.end());
 
         int i=0 , j=0 , c=0;
 
@@ -14,5 +14,6 @@ public:
         }
 
         return c;
+
     }
 };
