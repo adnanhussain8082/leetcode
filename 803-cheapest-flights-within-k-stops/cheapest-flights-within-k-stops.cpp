@@ -5,7 +5,7 @@ public:        //TC=O(E) E--->no of edges
     // Min-Heap PQ: O(E log V) because each relaxation requires a heap push/pop.
 
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-        vector<pair<int,int>> Adj[n];
+        vector<pair<int,int>> Adj[n]; // or vector<vector<pair<int,int>>> Adj(n);
         for(auto it : flights){
             Adj[it[0]].push_back({it[1],it[2]});
         }
