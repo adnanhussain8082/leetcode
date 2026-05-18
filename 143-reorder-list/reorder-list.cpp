@@ -16,17 +16,17 @@ public:
 
         ListNode *slow = head, *fast = head;
 
-        // Find middle
+        // find middle
         while(fast->next && fast->next->next){
             slow = slow->next;
             fast = fast->next->next;
         }
 
-        // Split list
+        // split list
         ListNode *nextHalfHead = slow->next;
         slow->next = NULL;
 
-        // Reverse second half
+        // reverse second half
         ListNode *curr = nextHalfHead, *prev = NULL;
 
         while(curr){
@@ -36,7 +36,7 @@ public:
             curr = temp;
         }
 
-        // Merge two halves
+        // merge two halves
         ListNode *first = head, *second = prev;
 
         while(second){
