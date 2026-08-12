@@ -15,6 +15,7 @@ public:        //TC=O(E) E--->no of edges
         q.push({0,{src,0}});
         cost[src]=0;
 
+        //check Note for an imp insight
         while(!q.empty()){
             auto it=q.front();
             q.pop();
