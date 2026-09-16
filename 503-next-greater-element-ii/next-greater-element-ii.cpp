@@ -1,21 +1,21 @@
 class Solution {
 public:
     vector<int> nextGreaterElements(vector<int>& nums) {
-        int n=nums.size();
-        vector<int> NGE(n);
+        int n = nums.size();
+        vector<int> NGE(n, -1);
         stack<int> s;
 
-        for(int i=2*n-1;i>=0;i--){
+        for (int i = 0; i < 2 * n; i++) {
+            int curr = nums[i % n];
 
-            while(!s.empty() && s.top()<=nums[i%n]){
+            while (!s.empty() && nums[s.top()] < curr) {
+                NGE[s.top()] = curr;
                 s.pop();
             }
 
-            if(i<n){
-                NGE[i] = s.empty() ? -1 : s.top();
+            if (i < n) {
+                s.push(i);
             }
-
-            s.push(nums[i%n]);
         }
 
         return NGE;
